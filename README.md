@@ -47,7 +47,7 @@ Welcome to the Library Management System, a full-stack application built using t
 1. **Clone the repository:**
 
    ```bash
-   git clone https://github.com/T-Naveen-2308/Library-Management-System-MERN.git
+   git clone https://github.com/NavyaAgarwal02/Library-Management-System-MERN.git
    cd Library-Management-System-MERN
    ```
 2. **Install dependencies for both backend and frontend:**

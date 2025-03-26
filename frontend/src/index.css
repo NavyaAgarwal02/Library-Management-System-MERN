@@ -1,0 +1,94 @@
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap");
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+    --crimson: #dc143c;
+    --light-olive: #bcb88a;
+    --dark-green: #556b2f;
+    --medium-maroon: #994570;
+    --dark-maroon: #6b304e;
+    --btn-blue: #007bff;
+    --btn-hover-blue: #0a6ed9;
+    --mid-blue: #1e4c6d;
+    --yellow: #f3a700;
+    --light-yellow: #ffb617;
+}
+
+body {
+    margin: 0;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.content-section {
+    padding: 0.6rem 1.2rem;
+    border: 1px solid #918b8b;
+    border-radius: 0.5rem;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px,
+        rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+    width: 90.55%;
+}
+
+.width-45 {
+    width: 45% !important;
+}
+
+.width-60 {
+    width: 60% !important;
+}
+
+/* [data-theme="dark"] .btn {
+    color: #ecedef;
+} */
+
+.nav-item.active {
+    background-color: var(--btn-blue);
+    border-color: var(--btn-blue);
+    color: whitesmoke;
+    border-radius: 0.5rem;
+    padding: 0.5rem 0.75rem;
+    margin-right: 3px;
+    margin-left: 3px;
+}
+
+.search-form .btn {
+    border-radius: 0 0.5rem 0.5rem 0;
+    color: whitesmoke;
+}
+
+.bg-footer {
+    padding: 25px 0 25px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
+
+.card-img-top {
+    border-bottom: 2px solid #bbb6b6;
+    border-top-left-radius: 0.5rem;
+    border-top-right-radius: 0.5rem;
+}
+
+.btn-blue {
+    background-color: var(--btn-blue);
+    color: black;
+}
+
+.btn-blue:hover {
+    background-color: var(--btn-hover-blue);
+}
+
+.special-card {
+    border: 1px solid #868282;
+    box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
+        rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
+    border-radius: 0.5rem;
+}
+
+.special-file-upload {
+    border: 1px solid #ccc;
+    cursor: pointer;
+    display: inline-block;
+    color: #333;
+}

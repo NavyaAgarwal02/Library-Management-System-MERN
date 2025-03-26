@@ -1,0 +1,108 @@
+generator client {
+    provider = "prisma-client-js"
+}
+
+datasource db {
+    provider = "mongodb"
+    url      = env("DATABASE_URL")
+}
+
+enum Role {
+    user
+    librarian
+}
+
+model User {
+    id             String       @id @default(auto()) @map("_id") @db.ObjectId
+    name           String
+    username       String       @unique
+    email          String       @unique
+    password       String
+    profilePicture String       @default("defaultProfilePicture.png")
+    role           Role         @default(user)
+    requests       Request[]
+    feedbacks      Feedback[]
+    issuedBooks    IssuedBook[] @relation("userIssuedBook")
+    issuedByBooks  IssuedBook[] @relation("issuedIssuedBook")
+}
+
+model Section {
+    id           String   @id @default(auto()) @map("_id") @db.ObjectId
+    title        String   @unique
+    slug         String   @unique
+    dateModified DateTime @default(now()) @updatedAt
+    picture      String   @default("defaultSectionPicture.jpeg")
+    description  String
+    books        Book[]
+}
+
+model Book {
+    id           String       @id @default(auto()) @map("_id") @db.ObjectId
+    title        String       @unique
+    slug         String       @unique
+    author       String
+    dateModified DateTime     @default(now()) @updatedAt
+    picture      String       @default("defaultBookPicture.png")
+    description  String
+    pdfFile      String       @default("samplePdf.pdf")
+    section      Section      @relation(fields: [sectionSlug], references: [slug], onUpdate: Cascade)
+    sectionSlug  String
+    issuedBooks  IssuedBook[]
+    feedbacks    Feedback[]
+    requests     Request[]
+}
+
+enum RequestStatus {
+    pending
+    accepted
+    rejected
+}
+
+model Request {
+    id          String        @id @default(auto()) @map("_id") @db.ObjectId
+    slug        String        @unique
+    dateCreated DateTime      @default(now())
+    days        Int
+    status      RequestStatus @default(pending)
+    book        Book          @relation(fields: [bookSlug], references: [slug], onDelete: Cascade, onUpdate: Cascade)
+    bookSlug    String
+    user        User          @relation(fields: [username], references: [username], onDelete: Cascade, onUpdate: Cascade)
+    username    String
+
+    @@unique([bookSlug, username])
+}
+
+enum IssuedBookStatus {
+    current
+    returned
+}
+
+model IssuedBook {
+    id               String           @id @default(auto()) @map("_id") @db.ObjectId
+    slug             String           @unique
+    fromDate         DateTime         @default(now())
+    toDate           DateTime
+    status           IssuedBookStatus @default(current)
+    book             Book             @relation(fields: [bookSlug], references: [slug], onDelete: Cascade, onUpdate: Cascade)
+    bookSlug         String
+    issuer           User             @relation("issuedIssuedBook", fields: [issuedByUsername], references: [username], onDelete: Cascade, onUpdate: Cascade)
+    issuedByUsername String
+    user             User             @relation("userIssuedBook", fields: [username], references: [username], onDelete: Cascade, onUpdate: Cascade)
+    username         String
+
+    @@unique([bookSlug, username])
+}
+
+model Feedback {
+    id           String   @id @default(auto()) @map("_id") @db.ObjectId
+    slug         String   @unique
+    dateModified DateTime @default(now()) @updatedAt
+    rating       Int
+    content      String
+    book         Book     @relation(fields: [bookSlug], references: [slug], onDelete: Cascade, onUpdate: Cascade)
+    bookSlug     String
+    user         User     @relation(fields: [username], references: [username], onDelete: Cascade, onUpdate: Cascade)
+    username     String
+
+    @@unique([bookSlug, username])
+}
